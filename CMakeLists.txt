@@ -31,7 +31,11 @@ target_link_libraries(testcoderange
     pico_stdlib
     hardware_i2c
     hardware_timer
+    lvgl
 )
+
+#directory to use lvgl 
+add_subdirectory(lvgl)
 
 # Include directories
 target_include_directories(testcoderange PRIVATE
