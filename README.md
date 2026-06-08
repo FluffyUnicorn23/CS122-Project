@@ -27,3 +27,8 @@ The user can place a ball on the seesaw, and move it around. The user can also h
 1. <servo.h>
 
 
+
+# How we did it:
+We compare our target distance to our measured distance. The angle of the servo motor is then adjusted according to this value, until
+our target matches our measured distance. The measured distance is constantly sent to the FPGA via SPI communication.
+The FPGA stores these distance measuurments and displays them to the screen, giving our graph.
