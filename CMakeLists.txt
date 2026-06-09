@@ -1,4 +1,19 @@
-cmake_minimum_required(VERSION 3.13)
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+set(sdkVersion 2.2.0)
+set(toolchainVersion 14_2_Rel1)
+set(picotoolVersion 2.2.0-a4)
+set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
+if (EXISTS ${picoVscode})
+    include(${picoVscode})
+endif()
+
+set(PICO_BOARD pico2_w)
+
+cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
@@ -14,8 +29,8 @@ pico_sdk_init()
 
 # Add executable
 add_executable(testcoderange
-    testcoderange.cpp
-    VL53L0X.cpp
+    testcoderange.cpp
+    VL53L0X.cpp
 )
 
 # Program metadata
@@ -28,18 +43,15 @@ pico_enable_stdio_uart(testcoderange 0)
 
 # Libraries
 target_link_libraries(testcoderange
-    pico_stdlib
-    hardware_i2c
-    hardware_timer
-    lvgl
+    pico_stdlib
+    hardware_i2c
+    hardware_pwm
+    hardware_spi
 )
-
-#directory to use lvgl 
-add_subdirectory(lvgl)
 
 # Include directories
 target_include_directories(testcoderange PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Extra outputs (.uf2, .bin, etc.)
